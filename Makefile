@@ -17,7 +17,7 @@ COMPCERT ?= compcert
 
 #Note2:  By default, the rules for converting .c files to .v files
 # are inactive.  To activate them, do something like
-#CLIGHTGEN=$(COMPCERT)/clightgen 
+#CLIGHTGEN=$(COMPCERT)/clightgen
 
 #Note3: for SSReflect, one solution is to install MathComp 1.6
 # somewhere add this line to a CONFIGURE file
@@ -30,7 +30,7 @@ ANNOTATE=silent   # suppress chatty output from coqc
 
 CC_TARGET=compcert/cfrontend/Clight.vo
 CC_DIRS= lib common cfrontend exportclight
-VSTDIRS= msl sepcomp veric floyd progs concurrency ccc26x86 
+VSTDIRS= msl sepcomp veric floyd progs concurrency ccc26x86
 OTHERDIRS= wand_demo sha fcf hmacfcf tweetnacl20140427 hmacdrbg aes mailbox
 DIRS = $(VSTDIRS) $(OTHERDIRS)
 CONCUR = concurrency
@@ -400,13 +400,13 @@ else ifeq ($(strip $(ANNOTATE)), true)
 	@$(COQC) $(COQFLAGS) $*.v | awk '{printf "%s: %s\n", "'$*.v'", $$0}'
 else ifeq ($(strip $(ANNOTATE)), silent)
 	@$(COQC) $(COQFLAGS) $*.v >/dev/null
-else 
+else
 	@$(COQC) $(COQFLAGS) $*.v
-#	@util/annotate $(COQC) $(COQFLAGS) $*.v 
+#	@util/annotate $(COQC) $(COQFLAGS) $*.v
 endif
 
 # you can also write, COQVERSION= 8.6 or-else 8.6pl2 or-else 8.6pl3   (etc.)
-COQVERSION= 8.6.1 or-else 8.7.0 or-else 8.7.1
+COQVERSION= 8.6.1 or-else 8.7.0 or-else 8.7.1 or-else 8.8.0 or-else 8.8.1
 COQV=$(shell $(COQC) -v)
 ifeq ($(IGNORECOQVERSION),true)
 else
@@ -451,7 +451,7 @@ all: .loadpath version.vo $(FILES:.v=.vo) travis
 # $(patsubst %.v,floyd/%.vo,$(FLOYD_FILES)): compcert
 # msl/Coqlib2.vo: compcert
 # endif
- 
+
 msl:     .loadpath version.vo $(MSL_FILES:%.v=msl/%.vo)
 sepcomp: .loadpath $(CC_TARGET) $(SEPCOMP_FILES:%.v=sepcomp/%.vo)
 ccc26x86:   .loadpath $(CCC26x86_FILES:%.v=ccc26x86/%.vo)
@@ -474,7 +474,7 @@ aes: .loadpath $(AES_FILES:%.v=aes/%.vo)
 hkdf:    .loadpath $(HKDF_FILES:%.v=sha/%.vo)
 # drbg: .loadpath $(DRBG_FILES:%.v=verifiedDrbg/%.vo)
 mailbox: .loadpath mailbox/verif_mailbox_main.vo
-atomics: .loadpath mailbox/verif_kvnode_atomic.vo mailbox/verif_kvnode_atomic_ra.vo mailbox/verif_hashtable_atomic.vo mailbox/verif_hashtable_atomic_ra.vo 
+atomics: .loadpath mailbox/verif_kvnode_atomic.vo mailbox/verif_kvnode_atomic_ra.vo mailbox/verif_hashtable_atomic.vo mailbox/verif_hashtable_atomic_ra.vo
 
 CGFLAGS =  -DCOMPCERT
 
@@ -512,7 +512,7 @@ endif
 version.v:  VERSION $(MSL_FILES:%=msl/%) $(SEPCOMP_FILES:%=sepcomp/%) $(VERIC_FILES:%=veric/%) $(FLOYD_FILES:%=floyd/%)
 	sh util/make_version
 
-_CoqProject _CoqProject-export .loadpath .loadpath-export: Makefile util/coqflags 
+_CoqProject _CoqProject-export .loadpath .loadpath-export: Makefile util/coqflags
 	echo $(COQFLAGS) > .loadpath
 	util/coqflags > .loadpath-export
 	cp .loadpath-export _CoqProject-export
